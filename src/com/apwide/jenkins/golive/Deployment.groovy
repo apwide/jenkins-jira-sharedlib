@@ -73,7 +73,7 @@ class Deployment implements Serializable {
         try {
             def goliveStatus = info.status()
             def computedBuildNumber = "${buildNumber ?: script.getBuildNumber()}"
-            def changeLogsIssueKeys = new ChangeLogIssueKeyExtractor().extractIssueKeys(script) as String[]
+            def changeLogsIssueKeys = new ChangeLogIssueKeyExtractor(script).extract() as String[]
             def computedDescription = description ?: renderDescription(changeLogsIssueKeys, computedBuildNumber, goliveStatus)
             script.debug("""
               environmentId=${environmentId},

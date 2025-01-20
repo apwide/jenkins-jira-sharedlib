@@ -24,7 +24,7 @@ class Release implements Serializable {
     def sendReleaseInfo(versionName, versionDescription, projectIdOrKey, startDate, Collection<String> issueKeys, released, releaseDate) {
         script.debug("apwSendReleaseInfo to Jira...")
         try {
-            def computedIssueKeys = issueKeys ?: new ChangeLogIssueKeyExtractor().extractIssueKeys(script) as String[]
+            def computedIssueKeys = issueKeys ?: new ChangeLogIssueKeyExtractor(script).extract() as String[]
             script.debug("""
               versionName=${versionName},
               versionDescription=${versionDescription},

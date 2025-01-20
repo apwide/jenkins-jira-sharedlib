@@ -169,7 +169,7 @@ class Environment implements Serializable {
 
   private Set<String> toIssueKeys(Parameters params) {
     String[] manualIssueKeys = params.params.issueKeys as String[] ?: []
-    String[] computedIssueKeys = params.params.issueKeysFromCommitHistory ? new ChangeLogIssueKeyExtractor().extractIssueKeys(script) as String[] : []
+    String[] computedIssueKeys = params.params.issueKeysFromCommitHistory ? new ChangeLogIssueKeyExtractor(script).extract() as String[] : []
     return (manualIssueKeys + computedIssueKeys) as Set<String>
   }
 
@@ -199,7 +199,7 @@ class Environment implements Serializable {
 
   def toDeployment(Map params = [:]) {
     def directIssueKeys = params.deploymentIssueKeys ?: []
-    def commitIssueKeys = new ChangeLogIssueKeyExtractor().extractIssueKeys(this.script)
+    def commitIssueKeys = new ChangeLogIssueKeyExtractor(script).extract()
     def issueKeys = (directIssueKeys + commitIssueKeys) as Set<String>
     def versionName = params.deploymentVersionName as String
     def attributes = params.deploymentAttributes

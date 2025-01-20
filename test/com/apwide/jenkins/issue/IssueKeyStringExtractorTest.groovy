@@ -2,16 +2,16 @@ package com.apwide.jenkins.issue
 
 import spock.lang.Specification
 
-class IssueKeyStringExtractorTest extends Specification {
+import static com.apwide.jenkins.issue.IssueKeyStringExtractor.extractIssueKeys
 
-    final IssueKeyStringExtractor extractor = new IssueKeyStringExtractor()
+class IssueKeyStringExtractorTest extends Specification {
 
     def "should find 1 issueKey"() {
         given:
         def comment = "TEM-123 my comment"
 
         when:
-        def issueKeys = extractor.extractIssueKeys(comment)
+        def issueKeys = extractIssueKeys(comment)
 
         then:
         issueKeys.size() == 1
@@ -22,7 +22,7 @@ class IssueKeyStringExtractorTest extends Specification {
         def comment = "TEM-123 my comment CS-234"
 
         when:
-        def issueKeys = extractor.extractIssueKeys(comment)
+        def issueKeys = extractIssueKeys(comment)
 
         then:
         issueKeys.size() == 2
